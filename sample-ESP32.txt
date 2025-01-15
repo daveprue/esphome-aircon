@@ -1,0 +1,33 @@
+substitutions:
+  device_name: aircon
+  humanly_name: TCL Air Conditioner
+  device_description: "Monitor & Control TCL Air Conditioner"
+  uart_rx: GPIO16
+  uart_tx: GPIO17
+#  receive_led: GPIO2
+#  transmit_led: GPIO2
+
+packages:
+  remote_package:
+    url: https://github.com/daveprue/esphome-aircon.git
+    ref: main
+    files:
+      - packages/core.yaml
+    refresh: 30s
+    
+
+esphome:
+  name: ${device_name}
+  min_version: 2023.3.0
+  friendly_name: ${humanly_name}
+  comment: ${device_description}
+  project:
+    name: "Dave Prue.TCL Air Conditioner"
+    version: X-1
+
+status_led:
+  pin:
+    number: GPIO2
+    inverted: false
+
+
