@@ -49,33 +49,24 @@ wifi:
     ssid: "Air Conditioner"
 
 esphome:
-  name: ${device_name}
-  min_version: 2023.3.0
-  friendly_name: ${humanly_name}
-  platform: ESP32
-  board: esp32dev
-  comment: ${device_description}
-  project:
-    name: "Dave Prue.TCL Air Conditioner"
-    version: X-1
   on_boot:
     priority: -100
     then:
       lambda: !lambda |-
         id(${device_name}climate).set_beeper_state(false);
         id(${device_name}climate).set_force_mode_state(false);
-        
+      
         if (id(display_mode).state){
           id(${device_name}climate).set_display_state(true);
         }
-	else {
+        else {
           id(${device_name}climate).set_display_state(false);
         }
 
         if (id(ledflash_mode).state){
           id(${device_name}climate).set_module_display_state(true);
         } 
-	else {
+        else {
           id(${device_name}climate).set_module_display_state(false);
         }
         
