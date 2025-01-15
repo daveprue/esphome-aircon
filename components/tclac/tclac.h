@@ -1,10 +1,3 @@
-/**
-* Create by Miguel Ángel López on 20/07/19
-* and modify by xaxexa
-* Refactoring & component making:
-* Соловей с паяльником 15.03.2024
-**/
-
 #ifndef TCL_ESP_TCL_H
 #define TCL_ESP_TCL_H
 
@@ -12,6 +5,7 @@
 #include "esphome/core/defines.h"
 #include "esphome/components/uart/uart.h"
 #include "esphome/components/climate/climate.h"
+typedef unsigned char byte;
 
 namespace esphome {
 namespace tclac {
