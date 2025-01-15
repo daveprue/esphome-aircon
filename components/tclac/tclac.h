@@ -5,10 +5,11 @@
 #include "esphome/core/defines.h"
 #include "esphome/components/uart/uart.h"
 #include "esphome/components/climate/climate.h"
-typedef unsigned char byte;
 
 namespace esphome {
 namespace tclac {
+
+typedef unsigned char byte;
 
 #define SET_TEMP_MASK	0b00001111
 
