@@ -1,11 +1,7 @@
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# # # # #                                   НЕ РЕДАКТИРОВАТЬ!!                                  # # # # #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-# Компонент климата
 external_components:
   - source:
-      url: https://github.com/daveprue/tclac.git
+      url: https://github.com/daveprue/esphome-aircon.git
       type: git
       ref: master
     components: [ tclac ]
