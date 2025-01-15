@@ -7,11 +7,57 @@ external_components:
     components: [ tclac ]
     refresh: 30s
 
-# Конфигурация ESPHome
+status_led:
+  pin:
+    number: GPIO2
+    inverted: false
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: IP Address
+    ssid:
+      name: SSID
+    mac_address:
+      name: Mac Address
+    dns_address:
+      name: DNS
+
+# Allow provisioning Wi-Fi via serial
+improv_serial:
+
+esp32_improv:
+  authorizer: none
+
+logger:
+  level: DEBUG
+
+web_server:
+
+dashboard_import:
+  package_import_url: github://esphome/example-configs/esphome-web/esp32.yaml@main
+  import_full_config: true
+
+api:
+
+ota:
+- platform: esphome
+
+wifi:
+  id: "${device_name}_wifi"
+  ap:
+    ssid: "Air Conditioner"
+
 esphome:
   name: ${device_name}
   min_version: 2023.3.0
   friendly_name: ${humanly_name}
+  platform: ESP32
+  board: esp32dev
+  comment: ${device_description}
+  project:
+    name: "Dave Prue.TCL Air Conditioner"
+    version: X-1
   on_boot:
     priority: -100
     then:
@@ -94,37 +140,10 @@ uart:
   rx_pin: ${uart_rx}
   tx_pin: ${uart_tx}
 
-#api:
-#  encryption:
-#    key: "${api_key}"
-#
-#ota:
-#- platform: esphome
-#  password: "${ota_pass}"
-
-#wifi:
-#  id: "${device_name}_wifi"
-#  ssid: ${wifi_ssid}
-#  password: ${wifi_password}
-#  ap:
-#    ssid: "Air Conditioner"
-#    password: "${recovery_pass}"
-
-#captive_portal:
-
-
-# # # # # # # # # # # # # # # # # # # # # # #
-# # # # #     НЕ РЕДАКТИРОВАТЬ!     # # # # #
-# # # # # # # # # # # # # # # # # # # # # # #
-
-# ОБЯЗАТЕЛЬНО отключаем логгирование через UART
 #logger:
 #  baud_rate: 0
 
-# Раздел настроек устройства:
-# - Переключатели
 switch:
-  # Пищалка для подтверждения команд, по умолчанию выключена
   - name: " Beeper"
     platform: template
     device_class: switch
@@ -141,7 +160,6 @@ switch:
         lambda: !lambda |-
           id(${device_name}climate).set_beeper_state(false);
   
-  # Индикатор уставки температуры на корпусе внутреннего блока, по умолчанию включен
   - name: " Display"
     platform: template
     device_class: switch
@@ -158,7 +176,6 @@ switch:
         lambda: !lambda |-
           id(${device_name}climate).set_display_state(false);
   
-  # Светодиодная индикация обмена данными с кондиционером, по умолчанию выключена
   - name: " Display on Module"
     platform: template
     device_class: switch
@@ -191,7 +208,6 @@ switch:
         lambda: !lambda |-
           id(${device_name}climate).set_force_mode_state(false);
 
-# - Выпадающие списки
 select:
   # Настройка вертикального качания
   - platform: template
@@ -215,7 +231,6 @@ select:
             id(${device_name}climate).set_vertical_swing_direction(esphome::tclac::VerticalSwingDirection::DOWNSIDE);
           }
 
-  # Настройка горизонтального качания
   - platform: template
     name: Horizontal Swing
     id: hswing
@@ -240,7 +255,6 @@ select:
             id(${device_name}climate).set_horizontal_swing_direction(esphome::tclac::HorizontalSwingDirection::RIGHTSIDE);
           }
 
-  # Настройка фиксации вертикальной заслонки
   - platform: template
     name: Vertical Fixing
     id: vfixing
@@ -271,7 +285,6 @@ select:
             id(${device_name}climate).set_vertical_airflow(esphome::tclac::AirflowVerticalDirection::MAX_DOWN);
           }
 
-  # Настройка фиксации горизонатальных заслонок
   - platform: template
     name: Horizontal Fixing
     id: hfixing
